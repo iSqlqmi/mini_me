@@ -1,7 +1,6 @@
-import { getWeatherName } from "../lib/getWeatherName";
 import { useState, useEffect } from "react";
 import sunnyIcon from "../images/sunny.png";
-import partlyIcon from "../images/partly cloudy.png";
+import partlyIcon from "../images/partly-cloudy.png";
 import cloudyIcon from "../images/cloudy.png";
 import rainIcon from "../images/rain.png";
 import snowIcon from "../images/snow.png";
@@ -18,6 +17,27 @@ const mapIcon = {
 
 export default function WeatherPicture() {
     const [weather, setWeather] = useState(null);
+    
+    function getWeatherName(code) {
+        if (code === 0 || code === 1) return "sunny";
+        if (code === 2) return "partly";
+        if (code === 3) return "cloudy";
+    
+        if (
+            (code >= 51 && code <= 57) ||
+            (code >= 61 && code <= 67) ||
+            (code >= 80 && code <= 82)
+        ) return "rain";
+    
+        if (
+            (code >= 71 && code <= 77) ||
+            (code >= 85 && code <= 86)
+        ) return "snow";
+    
+        if (code >= 95 && code <= 99) return "storm";
+    
+        return null;
+    }
 
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(async (pos) => {
@@ -29,6 +49,7 @@ export default function WeatherPicture() {
               );
               const data = await res.json();
               setWeather(data.current_weather);
+              console.log("weather:", data.current_weather);
         });
     }, []);
 
@@ -36,10 +57,7 @@ export default function WeatherPicture() {
 
     return (
         <div className="weather" style={{width: "auto"}}> 
-            <img src={mapIcon[getWeatherName(weather.weathercode)]} width="15px" height="15px"
-            style={{
-                objectFit: "contain"
-            }}/>
+            <img src={mapIcon[getWeatherName(weather.weathercode)]} width="15px" height="15px" />
             
         </div>
     );
