@@ -35,7 +35,9 @@ export default function Weather() {
     if (!weather) return <div>Loading weather...</div>;
 
     return (
-        <div className="weather">
+        <div className="weather" style ={{
+            position: "relative"
+        }}> 
             <img src={mapIcon[getWeatherName(weather.weathercode)]} />
             <div>{weather.temperature}°C</div>
         </div>

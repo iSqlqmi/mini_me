@@ -169,9 +169,9 @@ export const Dashboard = (user) => {
                     setShowAlert(true);
                     setGoals(prev =>
                         prev.map(g =>
-                          g.id === goal.id ? { ...g, triggered: true } : g
+                            g.id === goal.id ? { ...g, triggered: true } : g
                         )
-                      );
+                    );
                 }
             });
         }, 1000);
@@ -183,63 +183,63 @@ export const Dashboard = (user) => {
         <div className="dashboard-grid">
 
             <div className="green-rect1">
-    {showAlert && <Alert
+                {showAlert && <Alert
                     message={alertMessage}
                     onClose={() => { setShowAlert(false) }}
                 />}
-    <div className="name" style={{ fontSize: "30px" }}>
-        Welcome back, {user.name}!
-    </div>
+                <div className="name" style={{ fontSize: "30px" }}>
+                    Welcome back, {user.name}!
+                </div>
 
-    <div className="datetime-wrapper">
-        <div className="date">{date}</div>
-        <div className="time">{timeDisplay}</div>
-    </div>
-</div>
-
-
-            {/* <div className="weather">
+                <div className="datetime-wrapper">
+                    <div className="weather">
                 <Weather />
-            </div> */}
+            </div>
+                    <div className="date">{date}</div>
+                    <div className="time">{timeDisplay}</div>
+                </div>
+            </div>
+
+
 
             <div className="avatar-stats-container">
 
-    <div className="avatar">
-        <img
-                    src={isDaytime() ? bgday : bgnight}
+                <div
+                    className="avatar"
                     style={{
-                        position: "absolute",
-                        width: "100%",
-                        height: "100%",
-                        objectFit: "cover",
+                        backgroundImage: `url(${isDaytime() ? bgday : bgnight})`,
+                        backgroundSize: "cover",
+                        backgroundPosition: "center",
+                        position: "relative",
                     }}
-                />
-        <img src={avatar} height="300px" />
-    </div>
+                >
+                    <img src={avatar} height="300px" />
+                </div>
 
-    <div className="right-side">
-        <div className="quote">
-            Quote: If you want the rainbow, you gotta put up with the rain.
-        </div>
 
-        <div className="statsBar">
-            <ul>
-                {statsState.map((stat) => (
-                    <li key={stat.name}>
-                        <div>{stat.name}</div>
-                        <progress value={stat.percentage} max="1" min="0.02" 
-                        style={{
-                                    accentColor: stat.percentage <= 0.2 ? "red" : "green",
+                <div className="right-side">
+                    <div className="quote">
+                        Quote: If you want the rainbow, you gotta put up with the rain.
+                    </div>
 
-                                }}
-                        />
-                    </li>
-                ))}
-            </ul>
-        </div>
-    </div>
+                    <div className="statsBar">
+                        <ul>
+                            {statsState.map((stat) => (
+                                <li key={stat.name}>
+                                    <div>{stat.name}</div>
+                                    <progress value={stat.percentage} max="1" min="0.02"
+                                        style={{
+                                            accentColor: stat.percentage <= 0.2 ? "red" : "green",
 
-</div>
+                                        }}
+                                    />
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
 
 
 
