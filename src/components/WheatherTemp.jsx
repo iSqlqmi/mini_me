@@ -36,7 +36,6 @@ export default function Weather() {
 
     return (
         <div className="weather">
-            <img src={mapIcon[getWeatherName(weather.weathercode)]} />
             <div>{weather.temperature}°C</div>
         </div>
     );
