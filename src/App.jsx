@@ -1,5 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 
+import "./index.css";
+
 import { Home } from "./pages/Home";
 import { NotFound } from "./pages/NotFound";
 import { Dashboard } from "./pages/Dashboard";

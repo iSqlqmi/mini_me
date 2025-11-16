@@ -1,33 +1,41 @@
 import { useState, useEffect } from "react"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import TimePicker from 'react-time-picker';
-import avatar from "../images/avatar.png";
+import Select from "react-select";
+
+import def from "../images/default.png";
+import dirty from "../images/dirty.png";
+import hungry from "../images/hungry.png";
+import sleepy from "../images/sleepy.png";
+
 
 export const Dashboard = (user) => {
     const [timeDisplay, setTimeDisplay] = useState(new Date().toLocaleString());
-    const [tasks, setTasks] = useLocalStorage("tasks", []);
+    const [goals, setGoals] = useLocalStorage("goals", []);
     const [timeInput, setTimeInput] = useState('10:00');
-    const [nameInput, setNameInput] = useState("");
+    const [goalInput, setGoalInput] = useState("");
+    const [avatar, setAvatar] = useState(def);
+    const [ava, setAva] = useState(null);
 
-    const addTask = (e) => {
+    const addGoal = (e) => {
         e.preventDefault();
-        if (!nameInput.trim()) return; // prevent empty tasks
 
-        const newTask = {
+        const newGoal = {
             id: crypto.randomUUID(),
-            name: nameInput,
+            name: goalInput,
             time: timeInput,
             completed: false,
         };
 
-        setTasks([...tasks, newTask]);
+        setGoals([...goals, newGoal]);
+        setAvatar(ava);
 
         // reset inputs
-        setTaskName("");
+        setgoalInput("");
         setTimeInput("10:00");
     }
 
-    const deleteTask = () => {
+    const deleteGoal = () => {
 
     }
     useEffect(() => {
@@ -40,28 +48,35 @@ export const Dashboard = (user) => {
             <div>Welcome back, {user.name}!</div>
             <div>Time right now is: {timeDisplay}</div>
             <img src={avatar} height="300px"></img>
-            <form onSubmit={addTask}>
+            <form onSubmit={addGoal}>
+                <Select
+                    options={[
+                        { ava: dirty, goal: "Take a shower", label: "Take a shower"},
+                        { ava: sleepy, goal: "Go to bed", label: "Go to bed" },
+                        { ava: hungry, goal: "Have Lunch", label: "Have Lunch"},
+                        { ava: hungry, goal: "Have Dinner", label: "Have Dinner"}
+                    ]}
+                    onChange={(option) => {
+                        setGoalInput(option.goal);
+                        setAva(option.ava);
+                    }}
+                />
                 <input
-                    type="name"
-                    name="taskName"
-                    onChange={(e) => setNameInput(e.target.value)}
-                    placeholder="name" />
-                <input 
-                    aria-label="Time" 
-                    name="taskTime"
-                    type="time" 
-                    onChange={(e) => setTimeInput(e.target.value)} 
+                    aria-label="Time"
+                    name="goalTime"
+                    type="time"
+                    onChange={(e) => setTimeInput(e.target.value)}
                     value={timeInput} />
-                <button type="submit">Add new task</button>
+                <button type="submit" style={{ background: "green" }}>Add new goal</button>
             </form>
             <ul>
-                {tasks.map((task) => (
-                    <li key={task.id}>
+                {goals.map((goal) => (
+                    <li key={goal.id}>
                         <div>
-                        {task.time} — {task.name}
+                            {goal.time} — {goal.name}
                         </div>
-                        <div>Status: {task.completed ? "Completed" : "Not completed"}</div>
-                        <button onClick={deleteTask}>Delete task</button>
+                        <div>Status: {goal.completed ? "Completed" : "Not completed"}</div>
+                        <button onClick={deleteGoal} style={{ color: "green" }}>Delete goal</button>
                     </li>
                 ))}
             </ul>
