@@ -4,21 +4,27 @@ import TimePicker from 'react-time-picker';
 import Select from "react-select";
 
 import Weather from "../components/Weather"
+import Alert from "../components/Alert"
+
 import def from "../images/default.png";
 import dirty from "../images/dirty.png";
 import hungry from "../images/hungry.png";
 import sleepy from "../images/sleepy.png";
 import thirsty from "../images/thirsty.png";
 
+import bgday from "../images/daybg.png";
+import bgnight from "../images/nightbg.png";
+
 export const Dashboard = (user) => {
+    const [name, setName] = useState("");
     const [date, setDate] = useState(new Date().toLocaleDateString());
     const [timeDisplay, setTimeDisplay] = useState(new Date().toLocaleTimeString());
     const [goals, setGoals] = useLocalStorage("goals", []);
     const [timeInput, setTimeInput] = useState('10:00');
+    const [weather, setWeather] = useState(null);
+
     const [goalInput, setGoalInput] = useState("");
     const [avatar, setAvatar] = useState(def);
-    const [ava, setAva] = useState(null);
-
     const [statsState, setStatsState] = useState([
         {
             name: "hunger",
@@ -45,7 +51,8 @@ export const Dashboard = (user) => {
             task: ["Take a shower"]
         }
     ]);
-
+    const [alertMessage, setAlertMessage] = useState("");
+    const [showAlert, setShowAlert] = useState(false);
 
     const addGoal = (e) => {
         e.preventDefault();
@@ -81,6 +88,18 @@ export const Dashboard = (user) => {
         );
     }
 
+    function isDaytime() {
+        const hour = new Date().getHours();
+        return hour >= 6 && hour < 18;
+    }
+
+    // Get the user's input from home page
+    useEffect(() => {
+        const saved = localStorage.getItem("userName");
+        if (saved) setName(saved);
+    }, []);
+
+    // Update clock every 1s
     useEffect(() => {
         const interval = setInterval(() => {
             setTimeDisplay(new Date().toLocaleTimeString());
@@ -89,12 +108,13 @@ export const Dashboard = (user) => {
         return () => clearInterval(interval);
     }, [])
 
+    // Update statsState (depleting the stats) every 1s
     useEffect(() => {
         const interval = setInterval(() => {
             setStatsState(prev =>
                 prev.map(stat => ({
                     ...stat,
-                    percentage: Math.max(stat.percentage - 0.02, 0)
+                    percentage: Math.max(stat.percentage - 0.02, 0.02)
                 })
 
                 )
@@ -103,6 +123,7 @@ export const Dashboard = (user) => {
         return () => clearInterval(interval);
     }, [])
 
+    // Set avatar based on current lowest stat and whether it is < 20%
     useEffect(() => {
         const interval = setInterval(() => {
 
@@ -121,11 +142,45 @@ export const Dashboard = (user) => {
         return () => clearInterval(interval);
     }, [statsState]); // FIXED dependency
 
+    // Call weather api
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+
+            const res = await fetch(
+                `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
+            );
+            const data = await res.json();
+            setWeather(data.current_weather);
+        });
+    }, []);
+
+    // Check goals every second to see changes
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const now = new Date();
+            const current = now.toTimeString().slice(0, 5); // "HH:MM"
+
+            goals.forEach(goal => {
+                if (goal.time === current) {
+                    setAlertMessage(`Time to ${goal.name}!`);
+                    setShowAlert(true);
+                }
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [goals]);
 
     return (
         <div className="dashboard-grid">
 
             <div className="green-rect1">
+    {showAlert && <Alert
+                    message={alertMessage}
+                    onClose={() => { setShowAlert(false) }}
+                />}
     <div className="name" style={{ fontSize: "30px" }}>
         Welcome back, {user.name}!
     </div>
@@ -144,6 +199,15 @@ export const Dashboard = (user) => {
             <div className="avatar-stats-container">
 
     <div className="avatar">
+        <img
+                    src={isDaytime() ? bgday : bgnight}
+                    style={{
+                        position: "absolute",
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                    }}
+                />
         <img src={avatar} height="300px" />
     </div>
 
@@ -157,7 +221,12 @@ export const Dashboard = (user) => {
                 {statsState.map((stat) => (
                     <li key={stat.name}>
                         <div>{stat.name}</div>
-                        <progress value={stat.percentage} max="1" />
+                        <progress value={stat.percentage} max="1" min="0.02" 
+                        style={{
+                                    accentColor: stat.percentage <= 0.2 ? "red" : "green",
+
+                                }}
+                        />
                     </li>
                 ))}
             </ul>
@@ -180,7 +249,6 @@ export const Dashboard = (user) => {
                     ]}
                     onChange={(option) => {
                         setGoalInput(option.goal);
-                        setAva(option.ava);
                     }}
                 />
                 <input

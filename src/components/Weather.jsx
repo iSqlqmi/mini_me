@@ -1,36 +1,24 @@
-import { useEffect, useState } from "react";
-import sunny from "../images/sunny.png";
-import partly from "../images/partly cloudy.png";
-import cloudy from "../images/cloudy.png";
-import rain from "../images/rain.png";
-import snow from "../images/snow.png";
-import storm from "../images/storm.png";
+import { getWeatherName } from "../lib/getWeatherName";
+import { useState, useEffect } from "react";
+import sunnyIcon from "../images/sunny.png";
+import partlyIcon from "../images/partly cloudy.png";
+import cloudyIcon from "../images/cloudy.png";
+import rainIcon from "../images/rain.png";
+import snowIcon from "../images/snow.png";
+import stormIcon from "../images/storm.png";
+
+const mapIcon = {
+    sunny: sunnyIcon,
+    partly: partlyIcon,
+    rain: rainIcon,
+    cloudy: cloudyIcon,
+    snow: snowIcon,
+    storm: stormIcon,
+};
 
 export default function Weather() {
     const [weather, setWeather] = useState(null);
-    const [img, setImg] = useState(null);
 
-    function getWeatherName(code) {
-      if (code === 0 || code === 1) return sunny;
-      if (code === 2) return partly;
-      if (code === 3) return cloudy;
-  
-      if (
-        (code >= 51 && code <= 57) ||
-        (code >= 61 && code <= 67) ||
-        (code >= 80 && code <= 82)
-      ) return rain;
-  
-      if (
-        (code >= 71 && code <= 77) ||
-        (code >= 85 && code <= 86)
-      ) return snow;
-  
-      if (code >= 95 && code <= 99) return storm;
-  
-      return null;
-    }
-  
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(async (pos) => {
             const lat = pos.coords.latitude;
@@ -41,9 +29,6 @@ export default function Weather() {
               );
               const data = await res.json();
               setWeather(data.current_weather);
-              
-            console.log("API RESPONSE:", data);
-            console.log("API KEY:", import.meta.env.VITE_WEATHER_KEY);
         });
     }, []);
 
@@ -51,7 +36,7 @@ export default function Weather() {
 
     return (
         <div className="weather">
-            <img src={getWeatherName(weather.weathercode)} />
+            <img src={mapIcon[getWeatherName(weather.weathercode)]} />
             <div>{weather.temperature}°C</div>
         </div>
     );
