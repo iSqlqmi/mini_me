@@ -66,7 +66,7 @@ function EditableTextBox() {
 
     return (
         <div style={{ marginTop: "20px" }}>
-            <textarea
+            <input 
                 value={input}
                 onChange={handleChange}
                 placeholder="Write your name!"

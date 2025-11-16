@@ -189,7 +189,7 @@ export const Dashboard = (user) => {
                     onClose={() => { setShowAlert(false) }}
                 />}
                 <div className="name" style={{ fontSize: "30px" }}>
-                    Welcome back, {user.name}!
+                    Welcome back, {name}!
                 </div>
 
                 <div className="datetime-wrapper">
