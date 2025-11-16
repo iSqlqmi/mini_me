@@ -2,7 +2,9 @@ export const Home = () => {
     return (
         <div>
             Home
-            <button>Click Me</button>
+            <button onClick={handleClick}>
+                Get started!
+            </button>
         </div>
 
     )
