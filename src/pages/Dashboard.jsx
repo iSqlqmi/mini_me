@@ -3,6 +3,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage"
 import TimePicker from 'react-time-picker';
 import Select from "react-select";
 
+import Weather from "../components/Weather"
 import def from "../images/default.png";
 import dirty from "../images/dirty.png";
 import hungry from "../images/hungry.png";
@@ -101,6 +102,7 @@ export const Dashboard = (user) => {
         }, 1000);
         return () => clearInterval(interval);
     }, [])
+
     useEffect(() => {
         const interval = setInterval(() => {
 
@@ -126,6 +128,7 @@ export const Dashboard = (user) => {
             <div>Welcome back, {user.name}!</div>
             <div className="date">{date}</div>
             <div className="time">{timeDisplay}</div>
+            <Weather />
             <div className="quote">Quote: If you want the rainbow, you gotta put up with the rain.</div>
             <img src={avatar} height="300px"></img>
 
