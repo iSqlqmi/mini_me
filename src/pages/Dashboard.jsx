@@ -189,7 +189,7 @@ export const Dashboard = (user) => {
                     onClose={() => { setShowAlert(false) }}
                 />}
                 <div className="name" style={{ fontSize: "30px" }}>
-                    Welcome back, {name}!
+                    Welcome back, <span style={{ fontWeight: "bold" }}>{name}</span>
                 </div>
 
                 <div className="datetime-wrapper">
@@ -218,8 +218,10 @@ export const Dashboard = (user) => {
 
 
                 <div className="right-side">
-                    <div className="quote">
-                        Quote: If you want the rainbow, you gotta put up with the rain.
+                    <div className="quote" style={{
+
+                    }}>
+                        If you want the rainbow, you gotta put up with the rain.
                     </div>
 
                     <div className="statsBar">
@@ -237,47 +239,47 @@ export const Dashboard = (user) => {
                             ))}
                         </ul>
                     </div>
+                    <div style={{
+                        display: "flex"
+                    }}>
+                        <form onSubmit={addGoal} className="goalForm">
+                            <Select
+                                options={[
+                                    { ava: dirty, goal: "Take a shower", label: "Take a shower" },
+                                    { ava: sleepy, goal: "Go to bed", label: "Go to bed" },
+                                    { ava: hungry, goal: "Have Lunch", label: "Have Lunch" },
+                                    { ava: hungry, goal: "Have Dinner", label: "Have Dinner" },
+                                    { ava: thirsty, goal: "Drink Water", label: "Drink Water" },
+                                ]}
+                                onChange={(option) => {
+                                    setGoalInput(option.goal);
+                                }}
+                            />
+                            <input
+                                aria-label="Time"
+                                name="goalTime"
+                                type="time"
+                                onChange={(e) => setTimeInput(e.target.value)}
+                                value={timeInput}
+                            />
+                            <button type="submit">Add new goal</button>
+                        </form>
+
+                        <ul className="goalsList">
+                            {goals.map((goal) => (
+                                <li key={goal.id}>
+                                    <div>
+                                        {goal.time} — {goal.name}
+                                    </div>
+                                    <div>Status: {goal.completed ? "Completed" : "Not completed"}</div>
+                                    <button onClick={() => completeGoal(goal.id, goal.ava)}>Mark complete</button>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
                 </div>
 
             </div>
-
-
-
-
-            <form onSubmit={addGoal} className="goalForm">
-                <Select
-                    options={[
-                        { ava: dirty, goal: "Take a shower", label: "Take a shower" },
-                        { ava: sleepy, goal: "Go to bed", label: "Go to bed" },
-                        { ava: hungry, goal: "Have Lunch", label: "Have Lunch" },
-                        { ava: hungry, goal: "Have Dinner", label: "Have Dinner" },
-                        { ava: thirsty, goal: "Drink Water", label: "Drink Water" },
-                    ]}
-                    onChange={(option) => {
-                        setGoalInput(option.goal);
-                    }}
-                />
-                <input
-                    aria-label="Time"
-                    name="goalTime"
-                    type="time"
-                    onChange={(e) => setTimeInput(e.target.value)}
-                    value={timeInput}
-                />
-                <button type="submit">Add new goal</button>
-            </form>
-
-            <ul className="goalsList">
-                {goals.map((goal) => (
-                    <li key={goal.id}>
-                        <div>
-                            {goal.time} — {goal.name}
-                        </div>
-                        <div>Status: {goal.completed ? "Completed" : "Not completed"}</div>
-                        <button onClick={() => completeGoal(goal.id, goal.ava)}>Mark complete</button>
-                    </li>
-                ))}
-            </ul>
 
         </div>
     );

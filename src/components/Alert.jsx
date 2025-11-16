@@ -42,7 +42,7 @@ const text = {
 const button = {
   padding: "8px 16px",
   fontSize: "16px",
-  background: "green",
+  background: "#F1BBE0",
   color: "white",
   border: "none",
   borderRadius: "6px",
