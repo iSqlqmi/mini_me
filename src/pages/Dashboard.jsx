@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import { useLocalStorage } from "../hooks/useLocalStorage"
 import TimePicker from 'react-time-picker';
+import avatar from "../images/avatar.png";
 
 export const Dashboard = (user) => {
     const [timeDisplay, setTimeDisplay] = useState(new Date().toLocaleString());
@@ -38,6 +39,7 @@ export const Dashboard = (user) => {
         <div>
             <div>Welcome back, {user.name}!</div>
             <div>Time right now is: {timeDisplay}</div>
+            <img src={avatar} height="300px"></img>
             <form onSubmit={addTask}>
                 <input
                     type="name"
