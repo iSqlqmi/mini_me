@@ -46,7 +46,7 @@ export const Dashboard = (user) => {
         }
     ]);
 
-    
+
     const addGoal = (e) => {
         e.preventDefault();
 
@@ -91,12 +91,12 @@ export const Dashboard = (user) => {
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setStatsState(prev => 
+            setStatsState(prev =>
                 prev.map(stat => ({
-                    ...stat, 
+                    ...stat,
                     percentage: Math.max(stat.percentage - 0.02, 0)
                 })
-                    
+
                 )
             )
         }, 1000);
@@ -123,17 +123,36 @@ export const Dashboard = (user) => {
 
 
     return (
-        <div>
-            <div className="green-rect1">
-            <div className="name">Welcome back, {user.name}!</div>
-            <div className="date">{date}</div>
-            <div className="time">{timeDisplay}</div>
-            </div>
-            <Weather />
-            <div className="quote">Quote: If you want the rainbow, you gotta put up with the rain.</div>
-            <img src={avatar} height="300px"></img>
+        <div className="dashboard-grid">
 
-        <div className="statsBar">    
+            <div className="green-rect1">
+    <div className="name" style={{ fontSize: "30px" }}>
+        Welcome back, {user.name}!
+    </div>
+
+    <div className="datetime-wrapper">
+        <div className="date">{date}</div>
+        <div className="time">{timeDisplay}</div>
+    </div>
+</div>
+
+
+            {/* <div className="weather">
+                <Weather />
+            </div> */}
+
+            <div className="avatar-stats-container">
+
+    <div className="avatar">
+        <img src={avatar} height="300px" />
+    </div>
+
+    <div className="right-side">
+        <div className="quote">
+            Quote: If you want the rainbow, you gotta put up with the rain.
+        </div>
+
+        <div className="statsBar">
             <ul>
                 {statsState.map((stat) => (
                     <li key={stat.name}>
@@ -142,9 +161,15 @@ export const Dashboard = (user) => {
                     </li>
                 ))}
             </ul>
-            </div>  
+        </div>
+    </div>
 
-            <form onSubmit={addGoal}>
+</div>
+
+
+
+
+            <form onSubmit={addGoal} className="goalForm">
                 <Select
                     options={[
                         { ava: dirty, goal: "Take a shower", label: "Take a shower" },
@@ -163,32 +188,24 @@ export const Dashboard = (user) => {
                     name="goalTime"
                     type="time"
                     onChange={(e) => setTimeInput(e.target.value)}
-                    value={timeInput} />
-                <button type="submit" style={{ background: "green" }}>Add new goal</button>
+                    value={timeInput}
+                />
+                <button type="submit">Add new goal</button>
             </form>
 
-            <ul>
+            <ul className="goalsList">
                 {goals.map((goal) => (
                     <li key={goal.id}>
                         <div>
                             {goal.time} — {goal.name}
                         </div>
                         <div>Status: {goal.completed ? "Completed" : "Not completed"}</div>
-                        <button onClick={() => completeGoal(goal.id, goal.ava)} style={{ color: "green" }}>Mark complete</button>
+                        <button onClick={() => completeGoal(goal.id, goal.ava)}>Mark complete</button>
                     </li>
                 ))}
             </ul>
 
-          {/* <div className="statsBar">    
-            <ul>
-                {statsState.map((stat) => (
-                    <li key={stat.name}>
-                        <div>{stat.name}</div>
-                        <progress value={stat.percentage} max="1" />
-                    </li>
-                ))}
-            </ul>
-            </div>   */}
         </div>
-    )
+    );
+
 }
