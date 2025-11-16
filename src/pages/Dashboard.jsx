@@ -14,6 +14,7 @@ import bgday from "../images/daybg.png";
 import bgnight from "../images/nightbg.png";
 
 export const Dashboard = (user) => {
+    const [name, setName] = useState("");
     const [date, setDate] = useState(new Date().toLocaleDateString());
     const [timeDisplay, setTimeDisplay] = useState(new Date().toLocaleTimeString());
     const [goals, setGoals] = useLocalStorage("goals", []);
@@ -48,7 +49,6 @@ export const Dashboard = (user) => {
             task: ["Take a shower"]
         }
     ]);
-
 
     const addGoal = (e) => {
         e.preventDefault();
@@ -86,8 +86,15 @@ export const Dashboard = (user) => {
 
     function isDaytime() {
         const hour = new Date().getHours();
-        return hour >= 6 && hour < 18;   
+        return hour >= 6 && hour < 18;
     }
+
+    // Get the user's input from home page
+    useEffect(() => {
+        const saved = localStorage.getItem("userName");
+        if (saved) setName(saved);
+    }, []);
+
     // Update clock every 1s
     useEffect(() => {
         const interval = setInterval(() => {
@@ -148,7 +155,7 @@ export const Dashboard = (user) => {
     return (
         <div>
             <div className="green-rect1">
-                <div className="name">Welcome back, {user.name}!</div>
+                <div className="name">Welcome back, {name}!</div>
                 <div className="date">{date}</div>
                 <div className="time">{timeDisplay}</div>
             </div>
