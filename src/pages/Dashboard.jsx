@@ -124,13 +124,25 @@ export const Dashboard = (user) => {
 
     return (
         <div>
-
-            <div>Welcome back, {user.name}!</div>
+            <div className="green-rect1">
+            <div className="name">Welcome back, {user.name}!</div>
             <div className="date">{date}</div>
             <div className="time">{timeDisplay}</div>
+            </div>
             <Weather />
             <div className="quote">Quote: If you want the rainbow, you gotta put up with the rain.</div>
             <img src={avatar} height="300px"></img>
+
+        <div className="statsBar">    
+            <ul>
+                {statsState.map((stat) => (
+                    <li key={stat.name}>
+                        <div>{stat.name}</div>
+                        <progress value={stat.percentage} max="1" />
+                    </li>
+                ))}
+            </ul>
+            </div>  
 
             <form onSubmit={addGoal}>
                 <Select
@@ -167,6 +179,7 @@ export const Dashboard = (user) => {
                 ))}
             </ul>
 
+          {/* <div className="statsBar">    
             <ul>
                 {statsState.map((stat) => (
                     <li key={stat.name}>
@@ -175,6 +188,7 @@ export const Dashboard = (user) => {
                     </li>
                 ))}
             </ul>
+            </div>   */}
         </div>
     )
 }

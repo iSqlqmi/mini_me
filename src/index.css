@@ -170,4 +170,68 @@ button {
   cursor: pointer;
 }
 
+.date {
+  width: 160px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  padding-left: 100px;
+  margin-left: 300px;
+}
+
+.time {
+  width: 160px;
+  height: 80px;
+  background: white;
+  border-radius: 50%;
+  padding-left: 100px;
+  position: relative;
+  margin-left: 600px;
+  margin-bottom: 40px;
+}
+
+.green-rect1 {        /* makes child absolute relative to this box */
+  width: 900px;
+  height: 100px;
+  background-color: #BBF1CC;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column; 
+  padding-left: 100px;  
+  margin-left: 300px; /* stack textbox and button vertically */
+  margin-top: 80px;
+}
+
+.name {
+  margin-top: 40px;
+  margin-right: 40px;
+}
+
+.quote {
+  width: 460px;
+  height: 110px;
+  background-color: #BBF1CC;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column; 
+  padding-left: 0px;  
+  margin-left: 835px; /* stack textbox and button vertically */
+  text-align: center;
+  padding-top: 20px;
+  
+}
+
+.statsBar {
+  width: 650px;
+  height: 250px;
+  background-color: #BBF1CC;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column; 
+  padding-left: 0px;  
+  margin-left: 655px; /* stack textbox and button vertically */
+  text-align: center;
+  padding-top: 0px;
+  margin-bottom: 200px;
+}
 
