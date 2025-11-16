@@ -10,15 +10,18 @@ import hungry from "../images/hungry.png";
 import sleepy from "../images/sleepy.png";
 import thirsty from "../images/thirsty.png";
 
+import bgday from "../images/daybg.png";
+import bgnight from "../images/nightbg.png";
+
 export const Dashboard = (user) => {
     const [date, setDate] = useState(new Date().toLocaleDateString());
     const [timeDisplay, setTimeDisplay] = useState(new Date().toLocaleTimeString());
     const [goals, setGoals] = useLocalStorage("goals", []);
     const [timeInput, setTimeInput] = useState('10:00');
+    const [weather, setWeather] = useState(null);
+
     const [goalInput, setGoalInput] = useState("");
     const [avatar, setAvatar] = useState(def);
-    const [ava, setAva] = useState(null);
-
     const [statsState, setStatsState] = useState([
         {
             name: "hunger",
@@ -46,7 +49,7 @@ export const Dashboard = (user) => {
         }
     ]);
 
-    
+
     const addGoal = (e) => {
         e.preventDefault();
 
@@ -81,6 +84,11 @@ export const Dashboard = (user) => {
         );
     }
 
+    function isDaytime() {
+        const hour = new Date().getHours();
+        return hour >= 6 && hour < 18;   
+    }
+    // Update clock every 1s
     useEffect(() => {
         const interval = setInterval(() => {
             setTimeDisplay(new Date().toLocaleTimeString());
@@ -89,20 +97,22 @@ export const Dashboard = (user) => {
         return () => clearInterval(interval);
     }, [])
 
+    // Update statsState (depleting the stats) every 1s
     useEffect(() => {
         const interval = setInterval(() => {
-            setStatsState(prev => 
+            setStatsState(prev =>
                 prev.map(stat => ({
-                    ...stat, 
+                    ...stat,
                     percentage: Math.max(stat.percentage - 0.02, 0)
                 })
-                    
+
                 )
             )
         }, 1000);
         return () => clearInterval(interval);
     }, [])
 
+    // Set avatar based on current lowest stat and whether it is < 20%
     useEffect(() => {
         const interval = setInterval(() => {
 
@@ -121,28 +131,72 @@ export const Dashboard = (user) => {
         return () => clearInterval(interval);
     }, [statsState]); // FIXED dependency
 
+    // Call weather api
+    useEffect(() => {
+        navigator.geolocation.getCurrentPosition(async (pos) => {
+            const lat = pos.coords.latitude;
+            const lon = pos.coords.longitude;
+
+            const res = await fetch(
+                `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`
+            );
+            const data = await res.json();
+            setWeather(data.current_weather);
+        });
+    }, []);
 
     return (
         <div>
             <div className="green-rect1">
-            <div className="name">Welcome back, {user.name}!</div>
-            <div className="date">{date}</div>
-            <div className="time">{timeDisplay}</div>
+                <div className="name">Welcome back, {user.name}!</div>
+                <div className="date">{date}</div>
+                <div className="time">{timeDisplay}</div>
             </div>
             <Weather />
             <div className="quote">Quote: If you want the rainbow, you gotta put up with the rain.</div>
-            <img src={avatar} height="300px"></img>
+            <div
+                style={{
+                    position: "relative",
+                    width: "200px",     // FIXED WIDTH → no more long stretch
+                    height: "350px",    // FIXED HEIGHT
+                    overflow: "hidden",
+                }}
+            >
+                <img
+                    src={isDaytime() ? bgday : bgnight}
+                    style={{
+                        position: "absolute",
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                    }}
+                />
 
-        <div className="statsBar">    
-            <ul>
-                {statsState.map((stat) => (
-                    <li key={stat.name}>
-                        <div>{stat.name}</div>
-                        <progress value={stat.percentage} max="1" />
-                    </li>
-                ))}
-            </ul>
-            </div>  
+                <img
+                    src={avatar}
+                    style={{
+                        position: "absolute",
+                        bottom: 0,
+                        left: "50%",
+                        transform: "translateX(-50%)",
+                        height: "85%",
+                        width: "auto",
+                        objectFit: "contain",
+                        zIndex: 2,
+                    }}
+                />
+            </div>
+
+            <div className="statsBar">
+                <ul>
+                    {statsState.map((stat) => (
+                        <li key={stat.name}>
+                            <div>{stat.name}</div>
+                            <progress value={stat.percentage} max="1" />
+                        </li>
+                    ))}
+                </ul>
+            </div>
 
             <form onSubmit={addGoal}>
                 <Select
@@ -155,7 +209,6 @@ export const Dashboard = (user) => {
                     ]}
                     onChange={(option) => {
                         setGoalInput(option.goal);
-                        setAva(option.ava);
                     }}
                 />
                 <input
@@ -179,7 +232,7 @@ export const Dashboard = (user) => {
                 ))}
             </ul>
 
-          {/* <div className="statsBar">    
+            {/* <div className="statsBar">    
             <ul>
                 {statsState.map((stat) => (
                     <li key={stat.name}>
