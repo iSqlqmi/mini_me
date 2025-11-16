@@ -1,0 +1,31 @@
+
+.parent {
+    display: grid;
+    place-items: center;
+    height: 100vh;
+}
+    
+.div1 {
+    grid-column-start: 3;
+}
+
+.div2 {
+    grid-column-start: 3;
+    grid-row-start: 3;
+}
+
+.div3 {
+    grid-column-start: 3;
+    grid-row-start: 4;
+}
+
+.div4 {
+    grid-column-start: 3;
+    grid-row-start: 2;
+}
+
+.div5 {
+    grid-column-start: 3;
+    grid-row-start: 5;
+}
+        

@@ -69,7 +69,7 @@ button:focus-visible {
   }
 } */
 
-.title {
+/* .title {
   display: flex;
   flex-direction: column;
   justify-content: center; 
@@ -82,7 +82,7 @@ button:focus-visible {
   flex-direction: column;
   justify-content: center; 
   align-items: center;       
-  /*height: 100vh;*/             
+  /*height: 100vh;*            
   text-align: center;
 }
 
@@ -91,6 +91,54 @@ button:focus-visible {
   flex-direction: column;
   justify-content: center; 
   align-items: center;       
-  /*height: 100vh;  */           
+  height: 100vh;            
   text-align: center;
 }
+
+h1, p {
+  margin: 0.5em 0; /* smaller vertical spacing 
+} */
+
+html {
+  scroll-behavior: smooth;
+}
+
+.section {
+  min-height: 100vh; /* Each section fills the screen */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+
+.hero-section {
+  background-color: #FDF8F8;
+}
+
+.description-section {
+  background-color: #FDF8F8;
+}
+
+.start-section {
+  background-color: #FDF8F8;
+}
+
+img {
+  width: 400px;
+  height: auto;
+}
+
+button {
+  margin-top: 1rem;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  background: green;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+

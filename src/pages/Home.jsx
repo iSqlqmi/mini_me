@@ -1,38 +1,61 @@
 import { useNavigate } from "react-router-dom";
 import homepageLogo from "../images/Homepage_logo.png";
+import React, { useState } from 'react';
 
 export const Home = () => {
   return (
     <div>
-      <div className="title">
-        <h1>Welcome to MiniMe!</h1>
-        <img src={homepageLogo} alt="Homepage Logo" width="800px" height="1000px"/>
-      </div>
 
-      <div className="description">
+      {/* Hero / Title Section */}
+      <section id="hero" className="section hero-section">
+        <h1>Welcome to MiniMe!</h1>
+        <img src={homepageLogo} alt="Homepage Logo" />
+
+        <button onClick={() => scrollToSection("description")}>
+          Learn More ↓
+        </button>
+      </section>
+
+      {/* Description Section */}
+      <section id="description" className="section description-section">
         <p>Hi welcome to MiniMe! MiniMe can help you keep track of your daily needs </p>
         <p>sending you basic reminders to eat, sleep, and take a break! To get started </p>
         <p>click on the "Get Started" button below to try MiniMe today!</p>
-      </div>
 
-      <div className="title-button">
+      </section>
+
+      <section id="getName" className="section get-name">
+        <EditableTextBox />
+      </section>
+
+      {/* Get Started Section */}
+      <section id="get-started" className="section start-section">
         <GetStartedButton />
-      </div>
+      </section>
+
     </div>
   );
 };
 
-function GetStartedButton() {
-  const navigate = useNavigate();  
+// Smooth scrolling function
+function scrollToSection(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+}
 
-  function handleClick() {
-    navigate("/dashboard");        
-  }
+function GetStartedButton() {
+  const navigate = useNavigate();
+  return <button onClick={() => navigate("/dashboard")}>Get Started!</button>;
+}
+
+function EditableTextBox() {
+  const [text, setText] = useState('');
 
   return (
-    <button onClick={handleClick}>
-      Get Started!
-    </button>
+    <input
+      type="text"
+      value={text}
+      onChange={(e) => setText(e.target.value)}
+    />
   );
 }
 
