@@ -13,7 +13,7 @@ export function useLocalStorage(key, defaultValue) {
         } catch (e) {
             console.error("localStorage load error:", e);
         }
-    }, []);
+    }, [key]);
 
     // Save on change
     useEffect(() => {
@@ -22,7 +22,7 @@ export function useLocalStorage(key, defaultValue) {
         } catch (e) {
             console.error("localStorage save error:", e);
         }
-    }, [value]);
+    }, [key, value]);
 
     return [value, setValue];
 }
