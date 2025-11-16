@@ -4,6 +4,8 @@ import TimePicker from 'react-time-picker';
 import Select from "react-select";
 
 import Weather from "../components/Weather"
+import Alert from "../components/Alert"
+
 import def from "../images/default.png";
 import dirty from "../images/dirty.png";
 import hungry from "../images/hungry.png";
@@ -49,6 +51,8 @@ export const Dashboard = (user) => {
             task: ["Take a shower"]
         }
     ]);
+    const [alertMessage, setAlertMessage] = useState("");
+    const [showAlert, setShowAlert] = useState(false);
 
     const addGoal = (e) => {
         e.preventDefault();
@@ -115,7 +119,7 @@ export const Dashboard = (user) => {
 
                 )
             )
-        }, 100);
+        }, 1000);
         return () => clearInterval(interval);
     }, [])
 
@@ -152,9 +156,30 @@ export const Dashboard = (user) => {
         });
     }, []);
 
+    // Check goals every second to see changes
+    useEffect(() => {
+        const interval = setInterval(() => {
+            const now = new Date();
+            const current = now.toTimeString().slice(0, 5); // "HH:MM"
+
+            goals.forEach(goal => {
+                if (goal.time === current) {
+                    setAlertMessage(`Time to ${goal.name}!`);
+                    setShowAlert(true);
+                }
+            });
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [goals]);
+
     return (
         <div>
             <div className="green-rect1">
+                {showAlert && <Alert
+                    message={alertMessage}
+                    onClose={() => { setShowAlert(false) }}
+                />}
                 <div className="name">Welcome back, {name}!</div>
                 <div className="date">{date}</div>
                 <div className="time">{timeDisplay}</div>
@@ -202,7 +227,7 @@ export const Dashboard = (user) => {
                             <progress value={stat.percentage} max="1" min="0.02"
                                 style={{
                                     accentColor: stat.percentage <= 0.2 ? "red" : "green",
-                                    
+
                                 }}
                             />
                         </li>
