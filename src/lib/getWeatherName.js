@@ -16,5 +16,5 @@ export function getWeatherName(code) {
 
     if (code >= 95 && code <= 99) return "storm";
 
-    return null;
+    return "cloudy";
 }

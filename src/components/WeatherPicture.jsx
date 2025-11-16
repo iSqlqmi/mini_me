@@ -16,7 +16,7 @@ const mapIcon = {
     storm: stormIcon,
 };
 
-export default function Weather() {
+export default function WeatherPicture() {
     const [weather, setWeather] = useState(null);
 
     useEffect(() => {
@@ -35,10 +35,12 @@ export default function Weather() {
     if (!weather) return <div>Loading weather...</div>;
 
     return (
-        <div className="weather" style ={{
-            position: "relative"
-        }}> 
-            <img src={mapIcon[getWeatherName(weather.weathercode)]} />
+        <div className="weather" style={{width: "auto"}}> 
+            <img src={mapIcon[getWeatherName(weather.weathercode)]} width="15px" height="15px"
+            style={{
+                objectFit: "contain"
+            }}/>
+            
         </div>
     );
 }

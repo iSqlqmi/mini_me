@@ -16,7 +16,7 @@ const mapIcon = {
     storm: stormIcon,
 };
 
-export default function Weather() {
+export default function WeatherTemp() {
     const [weather, setWeather] = useState(null);
 
     useEffect(() => {

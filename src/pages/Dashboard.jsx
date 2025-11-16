@@ -3,7 +3,8 @@ import { useLocalStorage } from "../hooks/useLocalStorage"
 import TimePicker from 'react-time-picker';
 import Select from "react-select";
 
-import Weather from "../components/Weather"
+import WeatherTemp from "../components/WeatherTemp"
+import WeatherPicture from "../components/WeatherPicture"
 import Alert from "../components/Alert"
 
 import def from "../images/default.png";
@@ -192,9 +193,8 @@ export const Dashboard = (user) => {
                 </div>
 
                 <div className="datetime-wrapper">
-                    <div className="weather">
-                <Weather />
-            </div>
+                    <WeatherTemp />
+                    <WeatherPicture />
                     <div className="date">{date}</div>
                     <div className="time">{timeDisplay}</div>
                 </div>
