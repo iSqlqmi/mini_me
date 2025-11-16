@@ -1,31 +1,51 @@
-
-.parent {
-    display: grid;
-    place-items: center;
-    height: 100vh;
+.container--0- {
+  position: absolute;
+  left: -943px;
+  top: 3306px;
+  width: 1280px;
+  height: 832px;
+  background-color: #fdf8f8;
+  justify-content: start;
+  align-items: start;
 }
-    
-.div1 {
-    grid-column-start: 3;
+.text-0-1-0 {
+  width: 193px;
+  height: 24px;
+  color: #062310;
+  font-size: 20px;
+  font-family: Inter, "Bold";
+  font-weight: 700;
+  text-align: left;
+  vertical-align: top;
 }
-
-.div2 {
-    grid-column-start: 3;
-    grid-row-start: 3;
+.text-0-1-1 {
+  width: 859px;
+  height: 24px;
+  color: #062310;
+  font-size: 20px;
+  font-family: Inter, "Regular";
+  font-weight: 400;
+  text-align: left;
+  vertical-align: top;
 }
-
-.div3 {
-    grid-column-start: 3;
-    grid-row-start: 4;
+.text-0-1-6 {
+  width: 111px;
+  height: 24px;
+  color: #ffffff;
+  font-size: 20px;
+  font-family: Inter, "Regular";
+  font-weight: 400;
+  text-align: left;
+  vertical-align: top;
 }
-
-.div4 {
-    grid-column-start: 3;
-    grid-row-start: 2;
-}
-
-.div5 {
-    grid-column-start: 3;
-    grid-row-start: 5;
+.text-0-1-7 {
+  width: 117px;
+  height: 18px;
+  color: #062310;
+  font-size: 15px;
+  font-family: Inter, "Regular";
+  font-weight: 400;
+  text-align: left;
+  vertical-align: top;
 }
         

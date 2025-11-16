@@ -1,5 +1,5 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font: "Segoe UI"; 
   line-height: 1.5;
   font-weight: 400;
 
@@ -22,13 +22,9 @@ a:hover {
   color: #535bf2;
 }
 
-/* body {
-  margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
-} */
+ body {
+  margin-top: -50px;
+} 
 
 h1 {
     font-size: 3.2em;
@@ -104,38 +100,71 @@ html {
 }
 
 .section {
-  min-height: 100vh; /* Each section fills the screen */
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;  /* not centered anymore */
   padding: 2rem;
+  padding-top: 85px;            /* shift upward */
   text-align: center;
 }
 
 .hero-section {
   background-color: #FDF8F8;
-}
-
-.description-section {
-  background-color: #FDF8F8;
+  max-height: 100vh;
 }
 
 .start-section {
-  background-color: #FDF8F8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;  /* not centered anymore */
+  padding: 2rem;            /* shift upward */
+  text-align: center;
 }
 
 img {
-  width: 400px;
+  width: 275px;
   height: auto;
 }
 
+ .text-box {
+  position: relative;
+  width: 300px;        
+  height: 40px;
+  padding: 0.5rem;
+  font-size: 1rem;
+  align-items: center;
+  margin: 20px auto 0 auto;
+  padding-top: 50px;
+  top: 310px;
+  padding-right: 25px;
+}  
+
+.start-section {
+  display: flex;
+  justify-content: center;   /* center horizontally */
+  position: relative;        /* reference for absolute positioning inside */
+  min-height: 100vh;
+}
+
+.green-box {
+  position: relative;        /* makes child absolute relative to this box */
+  width: 450px;
+  height: 200px;
+  background-color: #BBF1CC;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;    /* stack textbox and button vertically */
+  align-items: center;       /* center horizontally */
+  justify-content: center;   /* center vertically */                /* space between textbox and button */
+}
+
 button {
-  margin-top: 1rem;
-  padding: 1rem 2rem;
+  padding: 0.8rem 1.5rem;
   font-size: 1.2rem;
-  background: green;
-  color: white;
+  background-color: #062310;
+  color: #FDF8F8;
   border: none;
   border-radius: 10px;
   cursor: pointer;

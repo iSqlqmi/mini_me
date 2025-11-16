@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import homepageLogo from "../images/Homepage_logo.png";
-import React, { useState } from 'react';
+import homeLogo from "../images/homelogo.png";
+import { useState, useEffect } from "react";
 
 export const Home = () => {
   return (
@@ -8,30 +8,31 @@ export const Home = () => {
 
       {/* Hero / Title Section */}
       <section id="hero" className="section hero-section">
-        <h1>Welcome to MiniMe!</h1>
-        <img src={homepageLogo} alt="Homepage Logo" />
-
-        <button onClick={() => scrollToSection("description")}>
+        <img src={homeLogo} alt="Homepage Logo"/>
+        <h1>Welcome to MiniMe</h1>
+        <p style={{ fontSize: "30px" }}>A gentle companion that helps you take care of yourself, without adding to your busy days.</p>
+            <div className="green-box">
+                <div className="text-box">
+                    <EditableTextBox />
+                </div>
+            <div className="start-section">
+                <GetStartedButton />
+            </div>
+      </div>
+        {/* <button onClick={() => scrollToSection("description")}>
           Learn More ↓
-        </button>
+        </button> */}
       </section>
 
-      {/* Description Section */}
-      <section id="description" className="section description-section">
-        <p>Hi welcome to MiniMe! MiniMe can help you keep track of your daily needs </p>
-        <p>sending you basic reminders to eat, sleep, and take a break! To get started </p>
-        <p>click on the "Get Started" button below to try MiniMe today!</p>
-
-      </section>
-
-      <section id="getName" className="section get-name">
-        <EditableTextBox />
+      {/* <section id="getName" className="section get-name">
+        <h2>Type and save your name then click on the "Get Started!" button :) </h2>
+       <EditableTextBox /> 
       </section>
 
       {/* Get Started Section */}
-      <section id="get-started" className="section start-section">
+      {/* <section id="get-started" className="section start-section">
         <GetStartedButton />
-      </section>
+      </section> */}
 
     </div>
   );
@@ -47,15 +48,38 @@ function GetStartedButton() {
   return <button onClick={() => navigate("/dashboard")}>Get Started!</button>;
 }
 
+/* -------- Editable Text Box Component -------- */
 function EditableTextBox() {
-  const [text, setText] = useState('');
+  const [input, setInput] = useState("");
+
+  // Load saved data when component loads
+  useEffect(() => {
+    const saved = localStorage.getItem("userText");
+    if (saved) setInput(saved);
+  }, []);
+
+
 
   return (
-    <input
-      type="text"
-      value={text}
-      onChange={(e) => setText(e.target.value)}
-    />
+    <div style={{ marginTop: "20px" }}>
+      <textarea
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        placeholder="Write your name!"
+        style={{
+          width: "300px",
+          height: "35px",
+          padding: "10px",
+          fontSize: "1rem",
+          borderRadius: "8px",
+          border: "1px solid #ccc",
+          backgroundColor: "white",
+          color: "black"
+        }}
+      />
+
+      <br />
+    </div>
   );
 }
 
