@@ -11,19 +11,23 @@ import thirsty from "../images/thirsty.png";
 const stats = [
     {
         name: "hunger",
-        percentage: 0.2
+        percentage: 0.2,
+        ava: hungry
     },
     {
         name: "thirst",
-        percentage: 0.3
+        percentage: 0.3,
+        ava: thirsty
     },
     {
         name: "energy",
-        percentage: 0.1
+        percentage: 0.7,
+        ava: sleepy
     },
     {
         name: "cleanliness",
-        percentage: 0.7
+        percentage: 0.7,
+        ava: dirty
     }
 ]
 export const Dashboard = (user) => {
@@ -46,7 +50,6 @@ export const Dashboard = (user) => {
         };
 
         setGoals([...goals, newGoal]);
-        setAvatar(ava);
 
         // reset inputs
         setgoalInput("");
@@ -55,8 +58,8 @@ export const Dashboard = (user) => {
 
     const completeGoal = (id) => {
         setGoals(goals.filter(goal => goal.id !== id));
-        setAvatar(def);
     }
+
     useEffect(() => {
         const interval = setInterval(() => {
             setTimeDisplay(new Date().toLocaleTimeString());
@@ -65,9 +68,28 @@ export const Dashboard = (user) => {
         return () => clearInterval(interval);
     }, [])
 
+    useEffect(() => {
+        const interval = setInterval(() => {
+
+            // 1. Find lowest stat
+            const lowest = stats.reduce((min, stat) =>
+                stat.percentage < min.percentage ? stat : min
+            )
+
+            // 2. Check if it’s under 20%
+            if (lowest.percentage <= 0.2) {
+                setAvatar(lowest.ava);
+            }
+
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [ava]);
+
+
     return (
         <div>
-            
+
             <div>Welcome back, {user.name}!</div>
             <div className="date">{date}</div>
             <div className="time">{timeDisplay}</div>
@@ -76,11 +98,11 @@ export const Dashboard = (user) => {
             <form onSubmit={addGoal}>
                 <Select
                     options={[
-                        { ava: dirty, goal: "Take a shower", label: "Take a shower"},
+                        { ava: dirty, goal: "Take a shower", label: "Take a shower" },
                         { ava: sleepy, goal: "Go to bed", label: "Go to bed" },
-                        { ava: hungry, goal: "Have Lunch", label: "Have Lunch"},
-                        { ava: hungry, goal: "Have Dinner", label: "Have Dinner"},
-                        { ava: thirsty, goal: "Drink Water", label: "Drink Water"},
+                        { ava: hungry, goal: "Have Lunch", label: "Have Lunch" },
+                        { ava: hungry, goal: "Have Dinner", label: "Have Dinner" },
+                        { ava: thirsty, goal: "Drink Water", label: "Drink Water" },
                     ]}
                     onChange={(option) => {
                         setGoalInput(option.goal);
