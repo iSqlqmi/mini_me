@@ -110,12 +110,12 @@ export const Dashboard = (user) => {
             setStatsState(prev =>
                 prev.map(stat => ({
                     ...stat,
-                    percentage: Math.max(stat.percentage - 0.02, 0)
+                    percentage: Math.max(stat.percentage - 0.02, 0.02)
                 })
 
                 )
             )
-        }, 1000);
+        }, 100);
         return () => clearInterval(interval);
     }, [])
 
@@ -199,7 +199,12 @@ export const Dashboard = (user) => {
                     {statsState.map((stat) => (
                         <li key={stat.name}>
                             <div>{stat.name}</div>
-                            <progress value={stat.percentage} max="1" />
+                            <progress value={stat.percentage} max="1" min="0.02"
+                                style={{
+                                    accentColor: stat.percentage <= 0.2 ? "red" : "green",
+                                    
+                                }}
+                            />
                         </li>
                     ))}
                 </ul>
