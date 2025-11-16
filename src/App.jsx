@@ -11,7 +11,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route index element={<Home />} /> {/* Landing page */}
-                <Route path="/dashboard" element={<Dashboard />}/>
+                <Route path="/dashboard" element={<Dashboard name="Bob" />}/>
                 <Route path="*" element={<NotFound />}/>
             </Routes>
         </BrowserRouter>
