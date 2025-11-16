@@ -1,16 +1,62 @@
-# React + Vite
+# 🌿 MiniMe — Your Gentle Self-Care Companion
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MiniMe is a wellness-focused web application designed to help users build healthier habits through gentle reminders, real-time data, and a personalized virtual companion. Instead of overwhelming users with rigid schedules, MiniMe encourages consistent self-care through subtle guidance and interactive features. Check it out [here](https://mini-me-gilt.vercel.app/)!
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Features
+### Interactive Avatar
+- Avatar appearance changes based on your wellness stats  
+- Stats include **hunger**, **thirst**, **energy**, and **cleanliness**
+- Stats naturally decrease over time  
+- Completing tasks restores stats and improves the avatar’s mood  
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Smart Goal System
+- Add daily goals with a chosen time  
+- Receive alerts when it's time to complete them  
+- Completing a goal restores the relevant stat  
+- Goals and username are saved using **LocalStorage**  
 
-## Expanding the ESLint configuration
+### Real-Time Weather Integration
+- Uses the **Open-Meteo API** for live temperature + weather codes  
+- Weather icon updates based on real-world conditions  
+- Utilizes browser geolocation to pull accurate results  
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 🎨 Clean, Dynamic UI
+- Built with **React components** and custom CSS  
+- Day/night backgrounds depending on real-world time  
+- Responsive layouts and modern styling  
+
+---
+
+## 🛠️ How We Built It
+
+We developed MiniMe using a front-end stack of:
+
+- **React** for UI structure and component logic  
+- **JavaScript** for timers, state updates, and interactions  
+- **HTML & CSS** for styling and layout  
+- **Open-Meteo API** for real-time data  
+- **LocalStorage** for client-side persistence  
+
+---
+
+## 📦 Installation & Setup
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/minime.git
+   cd minime
+2. Install dependencies:
+   ```bash
+   npm install
+
+3. Start the app:
+   ```bash
+   npm run dev
+
+4. Open the app in your browser:
+  ```bash
+  http://localhost:5173/
