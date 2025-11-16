@@ -66,6 +66,7 @@ export const Dashboard = (user) => {
             // FIXED: use statsState instead of stats
             ava: statsState.find(stat => stat.task.includes(goalInput))?.ava,
             completed: false,
+            triggered: false,
         };
 
         setGoals([...goals, newGoal]);
@@ -163,9 +164,14 @@ export const Dashboard = (user) => {
             const current = now.toTimeString().slice(0, 5); // "HH:MM"
 
             goals.forEach(goal => {
-                if (goal.time === current) {
+                if (!goal.triggered && goal.time === current) {
                     setAlertMessage(`Time to ${goal.name}!`);
                     setShowAlert(true);
+                    setGoals(prev =>
+                        prev.map(g =>
+                          g.id === goal.id ? { ...g, triggered: true } : g
+                        )
+                      );
                 }
             });
         }, 1000);
