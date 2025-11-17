@@ -60,3 +60,18 @@ We developed MiniMe using a front-end stack of:
 4. Open the app in your browser:
   ```bash
   http://localhost:5173/
+```
+---
+## 👥 Authors & Hackathon
+
+This project was created for **HackCamp 2025**, where we rapidly prototyped, built features, and iterated under tight time constraints. The hackathon setting pushed us to learn quickly, collaborate efficiently, and bring this idea to life in a short burst of focused development.
+
+### **Authors**
+- **Chuc An Trinh** — Developer
+- **Selina Jia** — Developer
+- **Yue Ka Lam** — UX Designer
+- **Yolanda Peng** — UX Designer
+
+### **Devpost**
+Learn more about the project on our Devpost submission:  
+👉 **[[MiniMe](https://devpost.com/software/minime-wzq92g)]**
